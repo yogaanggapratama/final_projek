@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Magang Mahasiswa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4ff;
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+    .side-menu {
+      width: 200px;
+      position: fixed;
+      height: 100%;
+      background-color: #392cdc;
+      color: white;
+      padding: 20px;
+    }
+    .side-menu h3 {
+      margin-top: 0;
+    }
+    .side-menu a {
+      display: block;
+      color: white;
+      margin: 10px 0;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .main-content {
+      margin-left: 220px;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .btn {
+      background: #4a47ff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .upload-section {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+    }
+    .status {
+      padding: 10px;
+      background: #eee;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .highlight {
+      background-color: #fff7d1;
+      color: #6b4f00;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    #login-page {
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login Page -->
+<div id="login-page">
+  <h2>Login SIMAGANG</h2>
+  <input class="input" type="text" placeholder="Username" />
+  <input class="input" type="password" placeholder="Password" />
+  <button class="btn" onclick="login()">Masuk</button>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard" style="display: none;">
+  <div class="side-menu">
+    <h3>SIMAGANG</h3>
+    <a onclick="showSection('profil')">Dashboard</a>
+    <a onclick="showSection('laporan')">Laporan Harian</a>
+    <a onclick="showSection('jadwal')">Jadwal</a>
+    <a onclick="showSection('dokumen')">Dokumen</a>
+    <a onclick="showSection('sertifikat')">Unggah Sertifikat</a>
+    <a onclick="showSection('status')">Status Magang</a>
+    <a onclick="showSection('pengaturan')">Pengaturan</a>
+    <a onclick="logout()" style="color: red;">Keluar</a>
+  </div>
+
+  <div class="main-content">
+    <!-- PROFIL -->
+    <div id="profil" class="container">
+      <h2>Profil Mahasiswa</h2>
+      <div class="section">
+        <input class="input" type="text" placeholder="Nama Lengkap">
+        <input class="input" type="text" placeholder="NIM">
+        <input class="input" type="text" placeholder="Program Studi">
+        <input class="input" type="text" placeholder="Fakultas">
+        <input class="input" type="text" placeholder="Universitas">
+        <input class="input" type="text" placeholder="Tahun Akademik">
+        <button class="btn">Simpan Profil</button>
+      </div>
+    </div>
+
+    <!-- Laporan Harian -->
+    <div id="laporan" class="container" style="display:none;">
+      <h2>Laporan Harian</h2>
+      <p>Silakan isi laporan harian Anda di sini.</p>
+    </div>
+
+    <!-- Jadwal -->
+    <div id="jadwal" class="container" style="display:none;">
+      <h2>Jadwal</h2>
+      <p>Tampilan jadwal magang Anda akan muncul di sini.</p>
+    </div>
+
+    <!-- Dokumen Pendukung -->
+    <div id="dokumen" class="container" style="display:none;">
+      <h2>Dokumen Pendukung</h2>
+      <div class="section">
+        <p><strong>CV / Resume:</strong> <span class="highlight">Belum Diunggah</span></p>
+        <button class="btn">Unggah Dokumen</button>
+
+        <p><strong>Surat Rekomendasi:</strong> <span class="highlight">Belum Diunggah</span></p>
+        <button class="btn">Unggah Dokumen</button>
+
+        <p><strong>Transkrip Nilai:</strong> <span class="highlight">Belum Diunggah</span></p>
+        <button class="btn">Unggah Dokumen</button>
+      </div>
+    </div>
+
+    <!-- Sertifikat Magang -->
+    <div id="sertifikat" class="container" style="display:none;">
+      <h2>Unggah Sertifikat Magang</h2>
+      <div class="upload-section">
+        Klik atau seret file sertifikat ke sini<br>
+        <small>Format: JPG, PNG, PDF (Maks. 10MB)</small>
+      </div>
+    </div>
+
+    <!-- Status Magang -->
+    <div id="status" class="container" style="display:none;">
+      <h2>Status Magang</h2>
+      <div class="status">
+        <strong>Status:</strong> Menunggu<br>
+        <small>Terakhir diperbarui: 24/6/2025</small><br><br>
+        <button class="btn">Perbarui Status</button>
+      </div>
+    </div>
+
+    <!-- Pengaturan -->
+    <div id="pengaturan" class="container" style="display:none;">
+      <h2>Pengaturan</h2>
+      
+      <div class="section">
+        <h3>Pengaturan Akun</h3>
+        <input class="input" type="email" placeholder="Email Aktif">
+        <input class="input" type="password" placeholder="Ubah Password">
+        <button class="btn">Simpan Pengaturan Akun</button>
+      </div>
+      
+      <div class="section">
+        <h3>Tema Tampilan</h3>
+        <select class="input" onchange="gantiTema(this.value)">
+          <option value="default">Biru Default</option>
+          <option value="gelap">Mode Gelap</option>
+          <option value="terang">Mode Terang</option>
+        </select>
+      </div>
+      
+      <div class="section">
+        <h3>Notifikasi</h3>
+        <label><input type="checkbox" checked> Email pemberitahuan status magang</label><br>
+        <label><input type="checkbox"> Notifikasi pengingat laporan harian</label>
+      </div>
+      
+      <div class="section">
+        <h3>Reset Data</h3>
+        <button class="btn" style="background: #e74c3c;">Reset Semua Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function login() {
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    showSection('profil');
+  }
+
+  function logout() {
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('login-page').style.display = 'block';
+  }
+
+  function showSection(id) {
+    const sections = ['profil', 'laporan', 'jadwal', 'dokumen', 'sertifikat', 'status', 'pengaturan'];
+    sections.forEach(section => {
+      document.getElementById(section).style.display = (section === id) ? 'block' : 'none';
+    });
+  }
+
+  function gantiTema(mode) {
+    if (mode === 'gelap') {
+      document.body.style.background = '#1e1e1e';
+      document.body.style.color = '#fff';
+    } else if (mode === 'terang') {
+      document.body.style.background = '#ffffff';
+      document.body.style.color = '#000';
+    } else {
+      document.body.style.background = '#f0f4ff';
+      document.body.style.color = '#000';
+    }
+  }
+</script>
+</body>
+</html>
